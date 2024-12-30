@@ -5,13 +5,13 @@ import logging
 from datetime import datetime
 
 class ConfigurationTournoi:
-    """Gère la configuration et la persistance des données du tournoi"""
+    """Gère la configuration et la persistance des données du tournoi."""
     def __init__(self, fichier_config='config_tournoi.json'):
         self.fichier_config = fichier_config
         self.configurations = self.charger_configuration()
 
     def charger_configuration(self):
-        """Charge la configuration existante ou crée une nouvelle"""
+        """Charge la configuration existante ou crée une nouvelle."""
         try:
             with open(self.fichier_config, 'r', encoding='utf-8') as f:
                 return json.load(f)
@@ -23,12 +23,12 @@ class ConfigurationTournoi:
             }
 
     def sauvegarder_configuration(self, donnees):
-        """Sauvegarde la configuration du tournoi"""
+        """Sauvegarde la configuration du tournoi."""
         with open(self.fichier_config, 'w', encoding='utf-8') as f:
             json.dump(donnees, f, ensure_ascii=False, indent=4)
 
 class JournalTournoi:
-    """Système de journalisation pour le tournoi"""
+    """Système de journalisation pour le tournoi."""
     def __init__(self, fichier_journal='journal_tournoi.log'):
         self.logger = logging.getLogger('TournoiFootball')
         self.logger.setLevel(logging.INFO)
@@ -46,13 +46,13 @@ class JournalTournoi:
         self.logger.addHandler(gestionnaire_fichier)
 
     def journal_match(self, type_match, ville1, region1, ville2, region2):
-        """Enregistre les détails d'un match dans le journal"""
+        """Enregistre les détails d'un match dans le journal."""
         message = (f"Match {type_match} : "
                    f"{ville1} ({region1}) vs {ville2} ({region2})")
         self.logger.info(message)
 
 class TournoiFootballTogolais:
-    """Classe principale de gestion du tournoi"""
+    """Classe principale de gestion du tournoi."""
     REGIONS = {
         "Maritime": ["Lomé", "Aného", "Tabligbo", "Vogan", "Tsévié"],
         "Plateaux": ["Atakpamé", "Kpalimé", "Badou", "Notsé"],
@@ -68,7 +68,7 @@ class TournoiFootballTogolais:
         self.regions_utilisees = set(self.configuration.configurations.get('regions_utilisees', []))
 
     def obtenir_ville_aleatoire(self, region_exclue=None, villes_exclues=None):
-        """Sélectionne une ville aléatoire avec des contraintes sophistiquées"""
+        """Sélectionne une ville aléatoire avec des contraintes sophistiquées."""
         if villes_exclues is None:
             villes_exclues = set()
         
@@ -91,12 +91,12 @@ class TournoiFootballTogolais:
             ]
         
         if not villes_possibles:
-            raise ValueError("Aucune ville disponible pour la sélection")
+            raise ValueError("Aucune ville disponible pour la sélection.")
         
         return random.choice(villes_possibles)
 
     def jouer_kpessekou(self):
-        """Génère un match Kpessekou avec des règles avancées"""
+        """Génère un match Kpessekou avec des règles avancées."""
         print("\n--- 🏆 Sélection de Match Kpessekou 🏆 ---")
         
         # Sélection de la première ville
@@ -132,7 +132,7 @@ class TournoiFootballTogolais:
         return (ville1, region1), (ville2, region2)
 
     def jouer_zobibi(self):
-        """Génère un match Zobibi avec des règles de validation avancées"""
+        """Génère un match Zobibi avec des règles de validation avancées."""
         print("\n--- 🏆 Sélection de Match Zobibi 🏆 ---")
         
         # Validation et sélection des régions
@@ -186,7 +186,7 @@ class TournoiFootballTogolais:
         return (ville1, region1), (ville2, region2)
 
     def afficher_statistiques(self):
-        """Affiche les statistiques détaillées du tournoi"""
+        """Affiche les statistiques détaillées du tournoi."""
         config = self.configuration.configurations
         historique = config.get('historique_matchs', [])
         
@@ -207,58 +207,30 @@ class TournoiFootballTogolais:
         print(f"Nombre de villes utilisées : {len(self.villes_utilisees)}")
 
     def menu_principal(self):
-        """Menu principal interactif avec gestion des erreurs"""
+        """Menu principal interactif avec gestion des erreurs."""
         while True:
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print("🏆 Tournoi de Football Togolais - Sélection des Villes 🇹🇬")
-            print("1. Match Kpessekou")
-            print("2. Match Zobibi")
-            print("3. Statistiques du Tournoi")
-            print("4. Réinitialiser le Tournoi")
-            print("5. Quitter")
+            print("\n--- Menu Principal ---")
+            print("1. Jouer un match Kpessekou")
+            print("2. Jouer un match Zobibi")
+            print("3. Afficher statistiques du tournoi")
+            print("4. Quitter")
             
             try:
-                choix = input("Votre choix (1-5) : ").strip()
-                
-                if choix == '1':
+                choix = int(input("Choisissez une option (1-4) : "))
+                if choix == 1:
                     self.jouer_kpessekou()
-                elif choix == '2':
+                elif choix == 2:
                     self.jouer_zobibi()
-                elif choix == '3':
+                elif choix == 3:
                     self.afficher_statistiques()
-                elif choix == '4':
-                    self.reinitialiser_tournoi()
-                elif choix == '5':
-                    print("Merci d'avoir utilisé l'application. Au revoir ! 👋")
+                elif choix == 4:
+                    print("Merci d'avoir utilisé le tournoi ! À bientôt !")
                     break
                 else:
-                    print("Choix invalide. Réessayez.")
-                
-                input("\nAppuyez sur Entrée pour continuer...")
-            
-            except Exception as e:
-                print(f"Une erreur s'est produite : {e}")
-                input("\nAppuyez sur Entrée pour continuer...")
+                    print("⚠️ Option invalide. Réessayez.")
+            except ValueError:
+                print("⚠️ Entrée invalide. Utilisez les chiffres 1 à 4.")
 
-    def reinitialiser_tournoi(self):
-        """Réinitialise complètement le tournoi"""
-        confirmation = input("⚠️ Êtes-vous sûr de vouloir réinitialiser le tournoi ? (O/N) : ").strip().upper()
-        if confirmation == 'O':
-            config = {
-                'historique_matchs': [],
-                'villes_utilisees': [],
-                'regions_utilisees': []
-            }
-            self.configuration.sauvegarder_configuration(config)
-            self.villes_utilisees.clear()
-            self.regions_utilisees.clear()
-            print("✅ Le tournoi a été réinitialisé avec succès.")
-        else:
-            print("❌ Réinitialisation annulée.")
-
-def main():
+if __name__ == '__main__':
     tournoi = TournoiFootballTogolais()
     tournoi.menu_principal()
-
-if __name__ == "__main__":
-    main()

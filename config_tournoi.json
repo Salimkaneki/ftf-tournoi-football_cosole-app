@@ -1,0 +1,32 @@
+{
+    "historique_matchs": [
+        {
+            "type": "Kpessekou",
+            "date": "2024-12-30T12:39:27.311227",
+            "ville1": "Sokodé",
+            "region1": "Centrale",
+            "ville2": "Mango",
+            "region2": "Savanes"
+        },
+        {
+            "type": "Zobibi",
+            "date": "2024-12-30T12:39:57.988852",
+            "ville1": "Tchamba",
+            "region1": "Maritime",
+            "ville2": "Kpalimé",
+            "region2": "Plateaux"
+        }
+    ],
+    "villes_utilisees": [
+        "Sokodé",
+        "Mango",
+        "Kpalimé",
+        "Tchamba"
+    ],
+    "regions_utilisees": [
+        "Savanes",
+        "Centrale",
+        "Maritime",
+        "Plateaux"
+    ]
+}
